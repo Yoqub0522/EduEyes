@@ -1,0 +1,27 @@
+  GNU nano 7.2                                   docker-compose.yml                                             
+services:
+  db:
+   image: postgres:15
+   environment:
+     POSTGRES_DB: edueyes
+     POSTGRES_USER: db_user
+     POSTGRES_PASSWORD: Yoqub0522
+   ports:
+     - "5432:5432"
+   volumes:
+     - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

@@ -20,7 +20,7 @@ class Organization(BaseModel):
 
 class OrganizationImage(BaseModel):
     organization = models.ForeignKey(Organization,related_name="images",on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="organizations/")
+    image = models.ImageField(upload_to="organizations/",blank=True,null=True)
 
     def __str__(self):
         return f"Image for {self.organization.name}"

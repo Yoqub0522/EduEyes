@@ -80,17 +80,20 @@ CORS_ALLOW_CREDENTIALS = True
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_RENDERER_CLASSES": [
-#         "common.renderers.CustomJSONRenderer",
-#         "rest_framework.renderers.BrowsableAPIRenderer",
-#     ],
-#     "EXCEPTION_HANDLER": "common.exceptions.custom_exception_handler",
-#     "DEFAULT_AUTHENTICATION_CLASSES": (
-#         "apps.admins.authentication.AdminJWTAuthentication",          # adminlar uchun
-#         "apps.users.authentication.UserJWTAuthentication",  # oddiy userlar uchun
-#     ),
-# }
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": [
+        "common.renderers.CustomJSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
+    "EXCEPTION_HANDLER": "common.exceptions.custom_exception_handler",
+    # "DEFAULT_AUTHENTICATION_CLASSES": (
+    #     "apps.admins.authentication.AdminJWTAuthentication",          # adminlar uchun
+    #     "apps.users.authentication.UserJWTAuthentication",  # oddiy userlar uchun
+    # ),
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend"
+    ]
+}
 # Database
 DATABASES = {
     'default': {
@@ -155,6 +158,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+STATIC_ROOT = os.environ.get('STATIC_ROOT', os.path.join(BASE_DIR, 'staticfiles'))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

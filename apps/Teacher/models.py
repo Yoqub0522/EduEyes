@@ -9,7 +9,7 @@ class Teacher(BaseModel):
     bio = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=20, unique=True)
     rating = models.FloatField(default=0.0)
-    image = models.ImageField(upload_to="teachers/")
+    image = models.ImageField(upload_to="teachers/",blank=True,null=True)
     organization = models.ForeignKey(
         Organization,
         on_delete=models.CASCADE,
