@@ -5,8 +5,7 @@ from django.conf.urls.static import static
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-
-
+from config.views import get_logged_errors, welcome
 
 # --- Admin API Swagger ---
 admin_schema_view = get_schema_view(
@@ -40,9 +39,9 @@ admin_schema_view = get_schema_view(
 
 
 urlpatterns = [
-
+    path('', welcome, name='index'),
+    path('logs-all/', get_logged_errors, name='errors'),
     path('admin/', admin.site.urls),
-
     # --- API routes ---
     path('api/admins/', include('api.admin.urls')),
     # path('api/users/', include('api.user.urls')),
