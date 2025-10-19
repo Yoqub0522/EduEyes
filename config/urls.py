@@ -23,19 +23,19 @@ admin_schema_view = get_schema_view(
 )
 
 # --- User API Swagger ---
-# user_schema_view = get_schema_view(
-#     openapi.Info(
-#         title="EduEyes User API",
-#         default_version='v1',
-#         description="Swagger documentation for User API endpoints.",
-#         contact=openapi.Contact(email="axmedov.yoqub0522@gmail.com"),
-#         license=openapi.License(name="BSD License"),
-#     ),
-#     public=True,
-#     patterns=[
-#         path('api/users/', include('api.user.urls')),
-#     ]
-# )
+user_schema_view = get_schema_view(
+    openapi.Info(
+        title="EduEyes User API",
+        default_version='v1',
+        description="Swagger documentation for User API endpoints.",
+        contact=openapi.Contact(email="axmedov.yoqub0522@gmail.com"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    patterns=[
+        path('api/users/', include('api.user.urls')),
+    ]
+)
 
 
 urlpatterns = [
@@ -44,11 +44,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # --- API routes ---
     path('api/admins/', include('api.admin.urls')),
-    # path('api/users/', include('api.user.urls')),
+    path('api/users/', include('api.user.urls')),
 
     # --- Swagger Docs ---
     path('swagger/admins/', admin_schema_view.with_ui('swagger', cache_timeout=0), name='admins-swagger-ui'),
-    # path('swagger/users/', user_schema_view.with_ui('swagger', cache_timeout=0), name='users-swagger-ui'),
+    path('swagger/users/', user_schema_view.with_ui('swagger', cache_timeout=0), name='users-swagger-ui'),
 ]
 
 
