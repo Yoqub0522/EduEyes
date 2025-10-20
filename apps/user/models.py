@@ -9,7 +9,7 @@ class UserRoles(models.TextChoices):
 
 class User(AbstractUser, BaseModel):
     username = models.CharField( max_length=150,unique=True,null=True,blank=True)
-    email = models.EmailField(unique=True, null=True, blank=True, db_index=True)
+    email = models.EmailField(unique=True, db_index=True)
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True, db_index=True)
     phone_code = models.CharField(max_length=10, null=True, blank=True)
