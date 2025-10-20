@@ -1,5 +1,5 @@
 from django.db import models
-
+from apps.addres.models import Address
 from common.models import BaseModel
 
 
@@ -12,6 +12,7 @@ class OrgType(models.TextChoices):
 class Organization(BaseModel):
     name = models.CharField(max_length=100)
     org_type = models.CharField(max_length=20, choices=OrgType.choices)
+    address = models.OneToOneField(Address,on_delete=models.CASCADE,related_name="organization")
 
     def __str__(self):
         return f"{self.name} ({self.get_org_type_display()})"

@@ -5,6 +5,7 @@ from common.models import BaseModel
 
 
 class Teacher(BaseModel):
+    username = models.CharField(max_length=20)
     full_name = models.CharField(max_length=100)
     bio = models.TextField(blank=True, null=True)
     phone = models.CharField(max_length=20, unique=True)

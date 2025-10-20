@@ -7,6 +7,7 @@ class TeacherSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = [
             "id",
+            "username",
             "full_name",
             "bio",
             "phone",
@@ -21,6 +22,7 @@ class TeacherCreateSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = [
             "id",
+            "username",
             "full_name",
             "bio",
             "phone",

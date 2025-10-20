@@ -30,29 +30,3 @@ class TeacherViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        teacher = serializer.save()
-        return Response(
-            TeacherSerializer(teacher).data,
-            status=status.HTTP_201_CREATED
-        )
-
-    def update(self, request, *args, **kwargs):
-        teacher = self.get_object()
-        serializer = self.get_serializer(teacher, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(
-            TeacherSerializer(teacher).data,
-            status=status.HTTP_200_OK
-        )
-
-    def destroy(self, request, *args, **kwargs):
-        teacher = self.get_object()
-        teacher.delete()
-        return Response(
-            {"detail": "O'qituvchi muvaffaqiyatli o'chirildi."},
-            status=status.HTTP_204_NO_CONTENT
-        )

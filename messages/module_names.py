@@ -13,17 +13,13 @@ LANG_INDEX = {
 }
 
 MODULE_NAMES = {
-    "category": ["Kategoriya", "Category", "Категория"],
-    "product": ["Mahsulot", "Product", "Продукт"],
+
     "admin": ["Administrator", "Admin", "Админ"],
     "user": ['Foydalanuvchi', 'Ползаватель', "User"],
-    "business_type": ['Business turi', "Тип бизнеса", "Business type"],
     "country":['Mamlakat','Страна','Country'],
     "region":['Viloyat','Провинция','Region'],
     "district":['Tuman','Oкруг','District'],
-    "banner":['Banner','Баннер','Banner'],
-    "recommends":['Recommends', 'Recommends', 'Recommends'],
-    "popular":['Ommabop','популярные','Popular']
+
 
 }
 
