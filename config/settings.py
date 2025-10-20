@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'apps.Organization',
     'apps.Teacher',
     'apps.addres',
-    'apps.user',
+
 
 ]
 
@@ -135,7 +135,7 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "common.exceptions.custom_exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # "apps.admins.authentication.AdminJWTAuthentication",
-        "apps.user.authentication.UserJWTAuthentication",  # oddiy userlar uchun
+        # "apps.user.authentication.UserJWTAuthentication",  # oddiy userlar uchun
     ),
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend"
@@ -220,4 +220,3 @@ CSRF_TRUSTED_ORIGINS = [
     'https://www.yoqubaxmedov.xyz',
 ]
 
-AUTH_USER_MODEL = 'user.User'

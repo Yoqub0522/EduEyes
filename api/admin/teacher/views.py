@@ -18,36 +18,63 @@ class TeacherViewSet(viewsets.ModelViewSet):
             return TeacherCreateSerializer
         return TeacherSerializer
 
-    @swagger_auto_schema(manual_parameters=[
-        openapi.Parameter(
-            'search',
-            openapi.IN_QUERY,
-            description="O'qituvchi ismi yoki bio bo'yicha qidirish",
-            type=openapi.TYPE_STRING
-        )
-    ])
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+    # --- SWAGGER PARAMETRLAR ---
+    search_param = openapi.Parameter(
+        name="search",
+        in_=openapi.IN_QUERY,
+        description="O'qituvchi ismi yoki bio bo'yicha qidirish",
+        type=openapi.TYPE_STRING,
+    )
+    organization_param = openapi.Parameter(
+        name="organization",
+        in_=openapi.IN_QUERY,
+        description="Tashkilot nomi bo‘yicha o‘qituvchilarni filtrlash",
+        type=openapi.TYPE_STRING,
+    )
 
+    # --- SWAGGER: list uchun to‘liq response bilan ---
+    @swagger_auto_schema(
+        manual_parameters=[search_param, organization_param],
+        responses={
+            200: openapi.Response(
+                description="O‘qituvchilar ro‘yxati",
+                schema=TeacherSerializer(many=True)
+            )
+        }
+    )
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        organization_name = request.query_params.get('organization')
+        if organization_name:
+            queryset = queryset.filter(organization__name__icontains=organization_name)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema(
+        request_body=TeacherCreateSerializer,
+        responses={201: openapi.Response("Yaratildi", TeacherSerializer())},
+    )
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         teacher = serializer.save()
-        return Response(
-            TeacherSerializer(teacher).data,
-            status=status.HTTP_201_CREATED
-        )
+        return Response(TeacherSerializer(teacher).data, status=status.HTTP_201_CREATED)
 
+    @swagger_auto_schema(
+        request_body=TeacherCreateSerializer,
+        responses={200: openapi.Response("Yangilandi", TeacherSerializer())},
+    )
     def update(self, request, *args, **kwargs):
         teacher = self.get_object()
         serializer = self.get_serializer(teacher, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(
-            TeacherSerializer(teacher).data,
-            status=status.HTTP_200_OK
-        )
+        return Response(TeacherSerializer(teacher).data, status=status.HTTP_200_OK)
 
+    @swagger_auto_schema(
+        responses={204: openapi.Response(description="O‘chirildi")}
+    )
     def destroy(self, request, *args, **kwargs):
         teacher = self.get_object()
         teacher.delete()
