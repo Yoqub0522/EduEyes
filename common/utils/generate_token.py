@@ -1,9 +1,8 @@
-from datetime import timedelta
 
-from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
-def generate_token_for_user(user, time=timedelta(days=30)):
+def generate_token_for_user(user):
     refresh = RefreshToken.for_user(user)
     acces = refresh.access_token
     acces['user_id'] = str(user.id)

@@ -18,7 +18,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ["org_type"]
     search_fields = ["name"]
-    http_method_names = ["get","post","patch","delete"]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
@@ -89,7 +89,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         R = 6371  # Yer radiusi (km)
         dlat = radians(lat2 - lat1)
         dlon = radians(lon2 - lon1)
-        a = sin(dlat/2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon/2) ** 2
+        a = sin(dlat / 2) ** 2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) ** 2
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
         distance = R * c
         return distance

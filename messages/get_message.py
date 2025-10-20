@@ -3,7 +3,7 @@ from messages.module_names import MESSAGES, MODULE_NAMES, LANG_INDEX
 
 
 def get_message(code: str, module: str = None) -> str:
-    lang = translation.get_language() or "uz"
+    lang = (translation.get_language() or "uz").split("-")[0]  # <-- muhim o‘zgarish shu
 
     message_template = MESSAGES[lang].get(code, "")
 

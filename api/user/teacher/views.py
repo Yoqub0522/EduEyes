@@ -1,4 +1,4 @@
-from rest_framework import  viewsets, filters
+from rest_framework import viewsets, filters
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from apps.Teacher.models import Teacher
@@ -8,10 +8,9 @@ from common.serializers.teacher.serializers import TeacherSerializer, TeacherCre
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all().order_by('-created_at')
     serializer_class = TeacherSerializer
-    http_method_names = ["get",]
+    http_method_names = ["get", ]
     filter_backends = [filters.SearchFilter]
     search_fields = ['full_name', 'bio']
-
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
@@ -28,4 +27,3 @@ class TeacherViewSet(viewsets.ModelViewSet):
     ])
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
-
