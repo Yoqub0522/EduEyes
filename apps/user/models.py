@@ -16,6 +16,9 @@ class User(AbstractUser, BaseModel):
     is_verified = models.BooleanField(default=False)
     role = models.CharField(max_length=10,choices=UserRoles.choices,default=UserRoles.USER,)
 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
     class Meta:
         db_table = 'users'
     def __str__(self):

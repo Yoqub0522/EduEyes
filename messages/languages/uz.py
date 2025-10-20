@@ -6,6 +6,8 @@ MESSAGES = {
     "1002": "Token bekor qilingan.",
     "1003": "Bu username allaqachin mavjud.",
     "1004": "Bu email allaqachin mavjud.",
+    "1005": "Kiritilgan email yoki parol xato!",
+    "1006": " Mufaqqiyatli login qilindi!",
 
     "400": "Xato so'rov.",
     "401": "Ro'yxatdan o'tmagansiz.",

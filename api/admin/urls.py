@@ -1,7 +1,6 @@
-from django.urls import path,include
+from django.urls import path, include
 
-
-urlpatterns=[
-    path('organization/',include('api.admin.organization.urls')),
-    path('teacher/',include('api.admin.teacher.urls')),
+urlpatterns = [
+    path('organization/', include('api.admin.organization.urls')),
+    path('teacher/', include('api.admin.teacher.urls')),
 ]
