@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status, filters
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
@@ -19,6 +20,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     filterset_fields = ["org_type"]
     search_fields = ["name"]
     http_method_names = ["get"]
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:

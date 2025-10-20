@@ -136,7 +136,7 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "common.exceptions.custom_exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # "apps.admins.authentication.AdminJWTAuthentication",
-        # "apps.user.authentication.UserJWTAuthentication",  # oddiy userlar uchun
+        "apps.user.authentication.UserJWTAuthentication",  # oddiy userlar uchun
     ),
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend"

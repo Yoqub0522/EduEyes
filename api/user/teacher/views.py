@@ -1,6 +1,7 @@
 from rest_framework import viewsets, filters, status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from apps.Teacher.models import Teacher
@@ -13,6 +14,7 @@ class TeacherViewSet(viewsets.ModelViewSet):
     http_method_names = ["get"]
     filter_backends = [filters.SearchFilter]
     search_fields = ['full_name', 'bio']
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
