@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.Organization',
     'apps.Teacher',
     'apps.addres',
+    'apps.user',
 
 
 ]
@@ -220,3 +221,4 @@ CSRF_TRUSTED_ORIGINS = [
     'https://www.yoqubaxmedov.xyz',
 ]
 
+AUTH_USER_MODEL = 'user.User'
