@@ -1,4 +1,4 @@
-djangorestframework-simplejwt
+djangorestframework_simplejwt==5.5.1
 Django==5.2.7
 djangorestframework==3.16.1
 drf-yasg==1.21.10
@@ -9,3 +9,4 @@ psycopg2-binary==2.9.10
 whitenoise==6.9.0
 PyYAML==6.0.3
 django-filter==25.2
+rest-framework-simplejwt==0.0.2
