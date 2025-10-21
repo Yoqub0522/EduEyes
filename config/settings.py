@@ -21,15 +21,12 @@ SECRET_KEY = env.str("DJANGO_SECRET", '')
 DEBUG = env.bool("DEBUG", default=True)
 
 ALLOWED_HOSTS = ['*']
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://localhost:3000",
 
-]
 
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
 
+
     #locale apps
     'apps.Organization',
     'apps.Teacher',
@@ -53,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'common.middleware.block_ip_middleware.BlockIPMiddleware',
     'common.middleware.global_handler.GlobalExceptionLoggingMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -221,4 +220,27 @@ CSRF_TRUSTED_ORIGINS = [
     'https://www.yoqubaxmedov.xyz',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://api.yoqubaxmedov.xyz",
+]
+
 AUTH_USER_MODEL = 'user.User'
+
+#jazzmin sozlamalari
+JAZZMIN_SETTINGS = {
+    "site_title": "EduEyes Admin",
+    "site_header": "EduEyes",
+    "site_brand": "EduEyes.io",
+    "welcome_sign": "Xush kelibsiz, admin!",
+    "copyright": "© EduEyes",
+    "show_ui_builder": True,  # UI builder’ni yoqadi
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "cerulean",   # boshqa variantlar: darkly, cerulean, cosmo, minty ...
+    "navbar_fixed": True,
+    "sidebar_fixed": True,
+    "show_ui_builder": True,
+}

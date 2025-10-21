@@ -11,6 +11,7 @@ from common.serializers.organization.serializers import (
     OrganizationSerializer,
     OrganizationCreateSerializer,
 )
+from common.utils.location import DEFAULT_LAT, DEFAULT_LONG
 
 
 class OrganizationViewSet(viewsets.ModelViewSet):
@@ -21,6 +22,8 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     search_fields = ["name"]
     http_method_names = ["get"]
     permission_classes = [IsAuthenticated]
+    DEFAULT_LAT = 41.311081
+    DEFAULT_LONG = 69.240562
 
     def get_serializer_class(self):
         if self.action in ["create", "update", "partial_update"]:
@@ -58,6 +61,11 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
         user_lat = request.query_params.get('lat')
         user_long = request.query_params.get('long')
+
+
+        #default qiymat olish
+        user_lat = float(user_lat) if user_lat is not None else DEFAULT_LAT
+        user_long = float(user_long) if user_long is not None else DEFAULT_LONG
 
         # Agar foydalanuvchi joylashuvi berilgan bo‘lsa:
         if user_lat and user_long:
