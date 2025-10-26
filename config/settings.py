@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.Teacher',
     'apps.addres',
     'apps.user',
+    'apps.contact',
 
 
 ]
@@ -221,9 +222,11 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
     "https://api.yoqubaxmedov.xyz",
+    "https://edueyesio.yoqubaxmedov.xyz",
+
 ]
 
 AUTH_USER_MODEL = 'user.User'

@@ -11,3 +11,4 @@ PyYAML==6.0.3
 django-filter==25.2
 rest-framework-simplejwt==0.0.2
 django-jazzmin==3.0.1
+requests==2.32.5
