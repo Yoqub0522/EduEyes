@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
+
 from common.models import BaseModel
 
 
@@ -37,6 +39,7 @@ class User(AbstractUser, BaseModel):
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True, db_index=True)
     phone_code = models.CharField(max_length=10, null=True, blank=True)
+    code_expires_at = models.DateTimeField(null=True, blank=True)
     is_verified = models.BooleanField(default=False)
     role = models.CharField(max_length=10, choices=UserRoles.choices, default=UserRoles.USER)
 
@@ -50,3 +53,10 @@ class User(AbstractUser, BaseModel):
 
     def __str__(self):
         return self.username or self.email or f"User {self.pk}"
+
+    def set_verification_code(self):
+        import random
+        from datetime import timedelta
+        self.phone_code = str(random.randint(100000, 999999))
+        self.code_expires_at = timezone.now() + timedelta(minutes=5)  # 5 daqiqalik amal muddati
+        self.save(update_fields=['phone_code', 'code_expires_at'])
