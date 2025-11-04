@@ -140,7 +140,12 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend"
-    ]
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
 }
 # Database
 DATABASES = {
@@ -227,6 +232,12 @@ CORS_ALLOWED_ORIGINS = [
     "https://api.yoqubaxmedov.xyz",
     "https://edueyesio.yoqubaxmedov.xyz",
 
+]
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'x-requested-with',
 ]
 
 AUTH_USER_MODEL = 'user.User'

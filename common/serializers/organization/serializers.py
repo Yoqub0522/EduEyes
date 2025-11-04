@@ -40,7 +40,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
 class OrganizationCreateSerializer(serializers.ModelSerializer):
     images = serializers.ListField(
         child=serializers.ImageField(max_length=1000000, allow_empty_file=False, use_url=False),
-        write_only=True
+        write_only=True,
+        required=False  # <-- required=False qo'shing
     )
     address = AddressSerializer(write_only=True)
     org_type = serializers.ChoiceField(
@@ -53,7 +54,7 @@ class OrganizationCreateSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'org_type', 'address', 'images']
 
     def create(self, validated_data):
-        images = validated_data.pop('images', [])
+        images = validated_data.pop('images', [])  # <-- default bo'sh list
         address_data = validated_data.pop('address')
 
         # Avval addressni yaratamiz
@@ -62,7 +63,7 @@ class OrganizationCreateSerializer(serializers.ModelSerializer):
         # Keyin organizationni address bilan yaratamiz
         organization = Organization.objects.create(address=address, **validated_data)
 
-        # Rasmlarni qo‘shamiz
+        # Rasmlarni qo'shamiz (agar mavjud bo'lsa)
         for image in images:
             OrganizationImage.objects.create(organization=organization, image=image)
 

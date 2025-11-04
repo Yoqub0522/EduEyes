@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status, filters
+from rest_framework import viewsets, status, filters, serializers
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
@@ -8,7 +8,7 @@ from math import radians, sin, cos, sqrt, atan2
 from apps.Organization.models import Organization, OrganizationImage
 from common.serializers.organization.serializers import (
     OrganizationSerializer,
-    OrganizationCreateSerializer,
+    OrganizationCreateSerializer, AddressSerializer,
 )
 
 
@@ -64,13 +64,37 @@ class OrganizationViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance)
         return Response({"message": "Organization retrieved successfully", "data": serializer.data}, status=status.HTTP_200_OK)
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        organization = serializer.save()
-        read_serializer = OrganizationSerializer(organization)
-        return Response({"message": "Organization created successfully", "data": read_serializer.data}, status=status.HTTP_201_CREATED)
+    class OrganizationCreateSerializer(serializers.ModelSerializer):
+        images = serializers.ListField(
+            child=serializers.ImageField(max_length=1000000, allow_empty_file=False, use_url=False),
+            write_only=True,
+            required=False  # <-- required=False qo'shing
+        )
+        address = AddressSerializer(write_only=True)
+        org_type = serializers.ChoiceField(
+            choices=Organization._meta.get_field('org_type').choices,
+            help_text="Tashkilot turi (University, School, Private School)"
+        )
 
+        class Meta:
+            model = Organization
+            fields = ['id', 'name', 'org_type', 'address', 'images']
+
+        def create(self, validated_data):
+            images = validated_data.pop('images', [])  # <-- default bo'sh list
+            address_data = validated_data.pop('address')
+
+            # Avval addressni yaratamiz
+            address = Address.objects.create(**address_data)
+
+            # Keyin organizationni address bilan yaratamiz
+            organization = Organization.objects.create(address=address, **validated_data)
+
+            # Rasmlarni qo'shamiz (agar mavjud bo'lsa)
+            for image in images:
+                OrganizationImage.objects.create(organization=organization, image=image)
+
+            return organization
     def update(self, request, *args, **kwargs):
         return self._update_instance(request, partial=False)
 
